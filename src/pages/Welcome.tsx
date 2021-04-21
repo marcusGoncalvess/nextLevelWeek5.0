@@ -1,6 +1,12 @@
 import React from 'react';
-import { SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
+import {
+  SafeAreaView,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
@@ -9,7 +15,7 @@ const Welcome = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
-        Gerencie {'\n'} suas plantas {'\n'} de forma fácil
+        Gerenciar {'\n'} suas plantas {'\n'} de forma fácil
       </Text>
       <Image style={styles.image} source={wateringImg} />
       <Text style={styles.subtitle}>
@@ -24,7 +30,7 @@ const Welcome = () => {
   );
 };
 
-const styles = ScaledSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -35,7 +41,7 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: colors.heading,
-    marginTop: '50@vs',
+    marginTop: hp('10%'),
   },
   subtitle: {
     textAlign: 'center',
@@ -48,7 +54,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    marginBottom: '20@vs',
+    marginBottom: hp('5%'),
     height: 56,
     width: 56,
   },
