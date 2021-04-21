@@ -5,27 +5,35 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
+  Platform,
+  Dimensions,
+  View,
 } from 'react-native';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Feather } from '@expo/vector-icons';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
+import fonts from '../styles/fonts';
 
 const Welcome = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>
-        Gerenciar {'\n'} suas plantas {'\n'} de forma fácil
-      </Text>
-      <Image style={styles.image} source={wateringImg} />
-      <Text style={styles.subtitle}>
-        Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
-        sempre que precisar.
-      </Text>
+      <View style={styles.wrapper}>
+        <Text style={styles.title}>
+          Gerencie {'\n'} suas plantas de{'\n'} forma fácil
+        </Text>
+        <Image style={styles.image} source={wateringImg} resizeMode="contain" />
+        <Text style={styles.subtitle}>
+          Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
+          sempre que precisar.
+        </Text>
 
-      <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-        <Text style={styles.buttonText}>{'>'}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+          <Text style={styles.buttonIcon}>
+            <Feather name="chevron-right" style={styles.buttonIcon} />
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -33,38 +41,44 @@ const Welcome = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  wrapper: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    marginTop: Platform.OS === 'ios' ? 38 : 50,
+    marginBottom: 10,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     color: colors.heading,
-    marginTop: hp('10%'),
+    fontFamily: fonts.heading,
+    lineHeight: 34,
   },
   subtitle: {
     textAlign: 'center',
     fontSize: 18,
     paddingHorizontal: 20,
     color: colors.heading,
+    fontFamily: fonts.text,
+  },
+  image: {
+    height: Dimensions.get('window').width * 0.7,
   },
   button: {
     backgroundColor: colors.green,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    marginBottom: hp('5%'),
     height: 56,
     width: 56,
   },
-  image: {
-    width: 292,
-    height: 284,
-  },
-  buttonText: {
+  buttonIcon: {
+    fontSize: 32,
     color: colors.white,
-    fontSize: 24,
   },
 });
 
