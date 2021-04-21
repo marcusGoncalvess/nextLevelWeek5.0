@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
@@ -29,7 +24,7 @@ const Welcome = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -40,7 +35,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: colors.heading,
-    marginTop: 38,
+    marginTop: '50@vs',
   },
   subtitle: {
     textAlign: 'center',
@@ -53,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
-    marginBottom: 10,
+    marginBottom: '20@vs',
     height: 56,
     width: 56,
   },
