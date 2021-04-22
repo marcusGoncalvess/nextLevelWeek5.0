@@ -8,6 +8,8 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import Button from '../components/Button';
 import colors from '../styles/colors';
@@ -43,29 +45,33 @@ const UserIdentification = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <View style={styles.content}>
-          <View style={styles.form}>
-            <View style={styles.header}>
-              <Text style={styles.emoji}>{isFilled ? '😁' : '😀'}</Text>
-              <Text style={styles.title}>Como podemos {'\n'} chamar você?</Text>
-            </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.content}>
+            <View style={styles.form}>
+              <View style={styles.header}>
+                <Text style={styles.emoji}>{isFilled ? '😁' : '😀'}</Text>
+                <Text style={styles.title}>
+                  Como podemos {'\n'} chamar você?
+                </Text>
+              </View>
 
-            <TextInput
-              style={[
-                styles.input,
-                (isFocused || isFilled) && { borderColor: colors.green },
-              ]}
-              placeholder="Digite um nome"
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              onChangeText={handleInputChange}
-            />
+              <TextInput
+                style={[
+                  styles.input,
+                  (isFocused || isFilled) && { borderColor: colors.green },
+                ]}
+                placeholder="Digite um nome"
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                onChangeText={handleInputChange}
+              />
 
-            <View style={styles.footer}>
-              <Button onPress={handleSubmit}>Confirmar</Button>
+              <View style={styles.footer}>
+                <Button onPress={handleSubmit}>Confirmar</Button>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
