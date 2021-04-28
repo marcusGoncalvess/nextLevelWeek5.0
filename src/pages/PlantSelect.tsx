@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import EnviromentButton from '../components/EnviromentButton';
@@ -14,26 +15,15 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 import api from '../services/api';
 import PlantCardPrimary from '../components/PlantCardPrimary';
+import { PlantProps } from '../libs/storage';
 
 interface EnvironmentProps {
   key: string;
   title: string;
 }
 
-interface PlantProps {
-  id: number;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: [string];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  };
-}
-
 const PlantSelect = () => {
+  const navigation = useNavigation();
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState('all');
   const [plants, setPlants] = useState<PlantProps[]>([]);
@@ -59,6 +49,10 @@ const PlantSelect = () => {
     setFilteredPlants(filtered);
   }
 
+  function handlePlantSelect(plant: PlantProps) {
+    navigation.navigate('PlantSave', { plant });
+  }
+
   async function handleFetchMore(distance: number) {
     if (distance < 1 || hasLoadedAll) return;
     setLoadingMore(true);
@@ -71,9 +65,10 @@ const PlantSelect = () => {
       `plants?_sort=name&_order=asc&_page=${page}&_limit=8`,
     );
 
-    if (!data) {
+    if (data.length === 0) {
       setLoading(false);
       setHasLoadedAll(true);
+      setLoadingMore(false);
       return;
     }
 
@@ -138,12 +133,17 @@ const PlantSelect = () => {
       <View style={[styles.plants, styles.container]}>
         <FlatList
           data={filteredPlants}
-          renderItem={({ item }) => <PlantCardPrimary data={item} />}
+          renderItem={({ item }) => (
+            <PlantCardPrimary
+              onPress={() => handlePlantSelect(item)}
+              data={item}
+            />
+          )}
           keyExtractor={item => String(item.id)}
           showsVerticalScrollIndicator={false}
           numColumns={2}
           contentContainerStyle={styles.contentContainerStyle}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.3}
           onEndReached={({ distanceFromEnd }) =>
             handleFetchMore(distanceFromEnd)
           }
